@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module id="com.intelizign.dfmea.widget" version="1.0.0">
+	<contribution configuration-id="com.polarion.alm.richpages.widgets">
+		<widget id="com.intelizign.report.dfmea.widget.DFMEAReportCreationWidget" instance="instance:com.polarion.createproject.ProjectCreationWidget"/>
+	</contribution>    
+</module>
