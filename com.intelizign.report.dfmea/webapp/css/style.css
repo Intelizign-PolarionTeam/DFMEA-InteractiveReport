@@ -1,0 +1,30 @@
+.tableFixHead {
+    overflow-y: auto;
+    overflow-x: auto;
+    height: 700px;
+    width: 100%;
+}
+
+.tableFixHead thead th {
+    position: sticky;
+    top: 0;
+}
+
+.tableFixHead th {
+    background: #dadada;
+}
+.tableFixHead th[scope="a"] {
+    background: Yellow;
+    text-align: center;
+}
+
+.tableFixHead th[scope="b"] {
+    background: #00FFFF;
+    text-align: center;
+ }
+
+table tr td {
+    overflow-wrap: break-word;
+    vertical-align: top;
+    text-align: left;
+}

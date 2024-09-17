@@ -1,5 +1,7 @@
 package com.intelizign.report.dfmea.widget;
 
+import org.jetbrains.annotations.NotNull;
+
 import com.intelizign.report.dfmea.render.DFMEAReportRenderer;
 import com.polarion.alm.shared.api.SharedContext;
 import com.polarion.alm.shared.api.model.rp.parameter.ParameterFactory;
@@ -8,11 +10,13 @@ import com.polarion.alm.shared.api.model.rp.widget.RichPageWidget;
 import com.polarion.alm.shared.api.model.rp.widget.RichPageWidgetContext;
 import com.polarion.alm.shared.api.model.rp.widget.RichPageWidgetRenderingContext;
 import com.polarion.alm.shared.api.utils.collections.ReadOnlyStrictMap;
+import com.polarion.alm.shared.api.utils.collections.StrictMap;
+import com.polarion.alm.shared.api.utils.collections.StrictMapImpl;
 
 
 public class DFMEAReportCreationWidget extends RichPageWidget {
 	
-	private static final String DFMEA_WIDGET_ICON = "CreateProject.png";
+	private static final String DFMEA_WIDGET_ICON = "DFMEAIcon.png";
 	private static final String DFMEA_RECORDS_WIDGET_INFO = "This Widget helps to Develop DFMEA Interactive Report";
 	private static final String DFMEA_WIDGET_LABEL = "DFMEA Interactive Report";
 
@@ -24,8 +28,9 @@ public class DFMEAReportCreationWidget extends RichPageWidget {
 
 	//Providing DFMEA Widget Icon
 	@Override
-	public String getIcon(RichPageWidgetContext context) {
-		return context.resourceUrl(DFMEA_WIDGET_ICON);
+	@NotNull
+	public String getIcon(RichPageWidgetContext arg0) {
+		return arg0.resourceUrl(DFMEA_WIDGET_ICON);
 	}
 
 	//Providing DFMEA Widget Label
@@ -36,12 +41,19 @@ public class DFMEAReportCreationWidget extends RichPageWidget {
 
 	@Override
 	public ReadOnlyStrictMap<String, RichPageParameter> getParametersDefinition(ParameterFactory arg0) {
-		return null;
+		StrictMap<String, RichPageParameter> parameters = new StrictMapImpl<String, RichPageParameter>();
+		
+		return parameters;
 	}
 
 	@Override
-	public String renderHtml(RichPageWidgetRenderingContext widgetContext) {
-		return new DFMEAReportRenderer(widgetContext).render();
+	public String renderHtml(RichPageWidgetRenderingContext widgetRenderingContext){
+			try {
+				return new DFMEAReportRenderer(widgetRenderingContext).render();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
 	}
 
 }

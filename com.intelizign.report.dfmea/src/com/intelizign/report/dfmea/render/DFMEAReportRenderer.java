@@ -1,5 +1,14 @@
 package com.intelizign.report.dfmea.render;
+import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+
 import org.jetbrains.annotations.NotNull;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
 import com.polarion.alm.shared.api.model.rp.widget.RichPageWidgetRenderingContext;
 import com.polarion.alm.shared.api.utils.html.HtmlFragmentBuilder;
 
@@ -20,40 +29,26 @@ public class DFMEAReportRenderer {
 	}
 
 	@NotNull
-	public String render() {
-	    HtmlFragmentBuilder builder = context.createHtmlFragmentBuilder();
+	public String render() throws Exception{
+		if (warningMessage != null) {
+			return context.renderWarning(warningMessage);
+		}
+	InputStream stream = getClass().getResourceAsStream("/webapp/render.vm");
+	System.out.print("stream is" + stream+"\n");
+	if (stream != null) {
 
-	    if (warningMessage != null) {
-	        return context.renderWarning(warningMessage);
-	    }
+		File tempFile = File.createTempFile("CreateProject", ".html");
+		Files.copy(stream, tempFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		Document doc = Jsoup.parse(tempFile, "UTF-8");
+		String modifiedHtml = doc.outerHtml();
+		HtmlFragmentBuilder builder = context.createHtmlFragmentBuilder();
+		builder.html(modifiedHtml);
 
-	  	 
-	    /*String pluginId = "com.polarion.createproject";
-	    Bundle bun = Platform.getBundle(pluginId);	   
-	    String relativeFilePath = "src/com/polarion/createproject/CreateProject.html";
-	    Pattern pattern = Pattern.compile("[A-Z]:.*$");
-	    Matcher matcher = pattern.matcher(bun.getLocation());
-	    String pathLocation = null;
-	    if (matcher.find()) {
-	        pathLocation = matcher.group(0);
-	    }
-	    String actualLocation = pathLocation + relativeFilePath;	   
-	    try {	       
-	    
-	        ITrackerService trackerService = (ITrackerService) PlatformContext.getPlatform()
-	                .lookupService(ITrackerService.class);	       
-	        IProjectGroup rootGroup = (IProjectGroup) trackerService.getProjectsService().getRootProjectGroup()
-	                .getContainedGroups().get(0);
-	        rootGroupList = listProjectGroup(rootGroup);	 
-	       
-	        Document doc = Jsoup.parse(new File(actualLocation), "UTF-8");	 
-	        String modifiedHtml = doc.outerHtml();
-	        builder.html(modifiedHtml);
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
-	    return builder.toString();*/
-	    return builder.toString();
+		return builder.toString();
+	} else {
+		return context.renderWarning("HTML file not found.");
 	}
+}
+
 
 }

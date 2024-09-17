@@ -5,7 +5,10 @@ Bundle-SymbolicName: com.intelizign.report.dfmea
 Bundle-Version: 1.0.0
 Require-Bundle: com.polarion.platform;bundle-version="3.23.4",
  com.polarion.alm.ui;bundle-version="3.23.4",
- com.polarion.alm.tracker;bundle-version="3.23.4"
+ com.polarion.alm.tracker;bundle-version="3.23.4",
+ org.eclipse.core.runtime;bundle-version="3.14.0",
+ org.eclipse.core.resources;bundle-version="3.13.0",
+ org.jsoup;bundle-version="1.15.2"
 Bundle-Vendor: INTELIZIGN
 Automatic-Module-Name: com.intelizign.report.dfmea
 Bundle-RequiredExecutionEnvironment: JavaSE-17
